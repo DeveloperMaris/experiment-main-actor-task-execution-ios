@@ -25,14 +25,17 @@ When *@MainActor* annotation is used **on the whole class**:
 Then inner-method calls are executed on different threads like:
 
 ```swift
-func printTemperatures() async {
-    printingInProgress = true
+@MainActor class ViewModel: ObservableObject {
+    ...
+    func printTemperatures() async {
+        printingInProgress = true
 
-    printComputerTemperature()                  // Nr.1 - executed on main thread
-    await printRoomTemperature()                // Nr.2 - executed on main thread
-    await service.printWeatherTemperature()     // Nr.3 - executed on background thread
+        printComputerTemperature()                  // Nr.1 - executed on main thread
+        await printRoomTemperature()                // Nr.2 - executed on main thread
+        await service.printWeatherTemperature()     // Nr.3 - executed on background thread
 
-    printingInProgress = false
+        printingInProgress = false
+    }
 }
 ```
 
@@ -47,13 +50,16 @@ When *@MainActor* annotation is used **on the method**:
 Then inner-method calls are executed on different threads like:
 
 ```swift
-func printTemperatures() async {
-    printingInProgress = true
+class ViewModel: ObservableObject {
+    ...
+    @MainActor func printTemperatures() async {
+        printingInProgress = true
 
-    printComputerTemperature()                  // Nr.1 - executed on main thread
-    await printRoomTemperature()                // Nr.2 - executed on background thread
-    await service.printWeatherTemperature()     // Nr.3 - executed on background thread
+        printComputerTemperature()                  // Nr.1 - executed on main thread
+        await printRoomTemperature()                // Nr.2 - executed on background thread
+        await service.printWeatherTemperature()     // Nr.3 - executed on background thread
 
-    printingInProgress = false
+        printingInProgress = false
+    }
 }
 ```
