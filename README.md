@@ -2,7 +2,12 @@
 
 An experiment to see on which thread (*main* or *background*) the process will execute inside a **Task**.
 
-## Process
+## Preconditions
+
+- Xcode 14.2.0
+- Swift 5.7.2
+
+## Tests
 
 Call a method inside a `Task { ... }` to see on which Thread the method body will be executed.
 
